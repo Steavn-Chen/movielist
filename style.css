@@ -1,21 +1,23 @@
-.card-body h5{
+.card-body h5 {
   font-size: 1.5rem;
-  height:80px;
+  height: 80px;
 }
-.fa-th, .fa-bars {
+.fa-th,
+.fa-bars {
   cursor: pointer;
 }
-.fa-th:hover, .fa-bars:hover {
-  color: #DAA520;
+.fa-th:hover,
+.fa-bars:hover {
+  color: #a6ff00;
   font-size: 2.5em;
 }
 .takeon {
-  color: #FF2400;
+  color: #ff2400;
 }
-.list-group-item .list-name{
+.list-group-item .list-name {
   display: flex;
   align-items: center;
 }
- .list-group-item .btn {
-  align-items: flex-end; 
-}  
+.list-group-item .btn {
+  align-items: flex-end;
+}

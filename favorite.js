@@ -6,6 +6,8 @@ const movies = JSON.parse(localStorage.getItem('favoriteMovies'))
 const datapanel = document.querySelector('#data-panel')
 const searchForm = document.querySelector('#search-form')
 const searchInput = document.querySelector('#search-input')
+const interfaceMode = document.querySelector('#interface-mode')
+let interfaceModeControl = "cardmode"
 
 function renderMoviesList(data) {
   let rawHTML = ''
@@ -26,6 +28,36 @@ function renderMoviesList(data) {
     </div>`
   })
   datapanel.innerHTML = rawHTML
+}
+
+function renderMoviesItem(data) {
+  let rawHTML = ``;
+  rawHTML += `<ul class="list-group list-group-flush w-100 d-flex justify-content-center">`;
+  data.forEach(function (item) {
+    rawHTML += `
+  <div class="list-group-item">
+    <div class="row d-flex flex-nowrap ">
+      <h5 class="list-name col-4"> ${item.title}</h5>
+      <span class="col-4">Release date: ${item.release_date}</span>
+      <div class="list-button col-4">
+        <button class="btn btn-primary btn-show-movie " data-toggle="modal" data-target="#movie-modal" data-id="${item.id}">More</button>
+        <button class="btn btn-info btn-add-favorite " data-id="${item.id}">+</button>
+      </div>
+    </div>
+  </div>
+`;
+  });
+
+  rawHTML += `</ul>`;
+  datapanel.innerHTML = rawHTML;
+}
+
+function interfaceModeChange(mode) {
+  if (interfaceModeControl === "cardmode") {
+    return renderMoviesList(mode);
+  } else if (interfaceModeControl === "listmode") {
+    return renderMoviesItem(mode);
+  }
 }
 
 function showMovieModal(id) {
@@ -66,6 +98,25 @@ datapanel.addEventListener('click', function onPaneilclicked(event) {
     removeFromFavorite(Number(event.target.dataset.id))
   }
 })
+
+interfaceMode.addEventListener("click", function oninterfaceModeclicked(event) {
+  // const datalength = filteredMovies.length ? filteredMovies : movies;
+  const fath = document.querySelector('.fa-th')
+  const fabars = document.querySelector('.fa-bars')
+  if (event.target.matches(".fa-th")) {
+    interfaceModeControl = "cardmode";
+    event.target.classList.add('takeon');
+    fabars.classList.remove('takeon')
+  } else if (event.target.matches(".fa-bars")) {
+    interfaceModeControl = "listmode";
+    event.target.classList.add('takeon');
+    fath.classList.remove('takeon')
+  }
+  interfaceModeChange(movies)
+  // interfaceModeChange(getMoviesByPage(1))
+  // renderpaginator(movies.length)
+  // renderpaginator(datalength.length)
+});
 
 renderMoviesList(movies)
 
